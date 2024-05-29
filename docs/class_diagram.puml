@@ -1,0 +1,23 @@
+@startuml ClassDiagram
+
+class User{
+    - username: str
+    - email: str 
+    - password: str 
+    +create_user()
+    +delete_user()
+}
+class Role{
+    - name:str
+    - description: str
+    + change_role()
+
+}
+class Text{
+    -content: str
+    - length: str
+    - language: str
+    + encrypt_text()
+
+}
+@enduml
