@@ -15,7 +15,7 @@ class Role{
 }
 class Text{
     -content: str
-    - length: str
+    - length: int
     - language: str
     + encrypt_text()
 
