@@ -1,8 +1,7 @@
 import unittest
 from flask import current_app
-from app import create_app
-from app.models import User, UserData
 from app import create_app, db
+from app.models import User, UserData
 
 class UserTestCase(unittest.TestCase):
     """
