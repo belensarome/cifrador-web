@@ -24,4 +24,10 @@ class Text(db.Model):
         f = Fernet(key)
         token = f.encrypt(self.content)
         self.content = token
+    
+    def decrypt(self, key):
+        f = Fernet(key)
+        d = f.decrypt(self.content)
+        self.content = d
+
 
