@@ -2,6 +2,7 @@ import unittest
 from flask import current_app
 from app import create_app, db
 from app.models import Text
+from cryptography.fernet import Fernet
 
 class TextTestCase(unittest.TestCase):
     def setUp(self):
@@ -12,7 +13,7 @@ class TextTestCase(unittest.TestCase):
 
     def tearDown(self):
         db.session.remove()
-        # db.drop_all()
+        db.drop_all()
         self.app_context.pop()
 
     def test_text(self):
@@ -24,8 +25,18 @@ class TextTestCase(unittest.TestCase):
 
         self.assertIsNotNone(mytext)
         self.assertEqual(mytext.content, "Hola mundo")
-
     
+    def test_encrypt(self):
+        
+        mytext = Text()
+        mytext.content = b"Hola mundo"
+        mytext.length = len(mytext.content)
+        mytext.language = "es"
+        
+        key = Fernet.generate_key()
+        mytext.encrypt(key)
+        self.assertNotEqual(mytext.content, b"Hola mundo")
+
 
 if __name__ == '__main__':
     unittest.main()

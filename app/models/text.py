@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 from app import db
+from cryptography.fernet import Fernet
 
 @dataclass(init=False, repr=True, eq=True)
 class Text(db.Model):
@@ -14,3 +15,13 @@ class Text(db.Model):
         db.session.add(self)
         db.session.commit()
         return self
+
+    def delete(self) -> None:
+        db.session.delete(self)
+        db.session.commit()
+
+    def encrypt(self, key):
+        f = Fernet(key)
+        token = f.encrypt(self.content)
+        self.content = token
+
