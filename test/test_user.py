@@ -2,6 +2,9 @@ import unittest
 from flask import current_app
 from app import create_app, db
 from app.models import User, UserData
+from app.services import UserService
+
+user_service = UserService()
 
 class UserTestCase(unittest.TestCase):
     """
@@ -63,7 +66,7 @@ class UserTestCase(unittest.TestCase):
         user.username = 'pabloprats'
         user.password = 'Qvv3r7y'
 
-        user.save()
+        user_service.save(user)
         self.assertGreaterEqual(user.id, 1)
         self.assertTrue(user.email, 'test@test.com')
         self.assertTrue(user.username, 'pabloprats')
@@ -89,11 +92,11 @@ class UserTestCase(unittest.TestCase):
         user.username = 'pabloprats'
         user.password = 'Qvv3r7y'
 
-        user.save()
+        user_service.save(user)
 
         #borro el usuario
-        user.delete()
-        self.assertIsNone(User.find(user.id))
+        user_service.delete(user)
+        self.assertIsNone(user_service.find(user))
     
     def test_user_all(self):
         
@@ -109,9 +112,9 @@ class UserTestCase(unittest.TestCase):
         user.email = 'test@test.com'
         user.username = 'pabloprats'
         user.password = 'Qvv3r7y'
-        user.save()
+        user_service.save(user)
 
-        users = User.all()
+        users = user_service.all()
         self.assertGreaterEqual(len(users), 1)
     
     def test_user_find(self):
@@ -128,9 +131,9 @@ class UserTestCase(unittest.TestCase):
         user.email = 'test@test.com'
         user.username = 'pabloprats'
         user.password = 'Qvv3r7y'
-        user.save()
+        user_service.save(user)
 
-        user_find = User.find(1)
+        user_find = user_service.find(1)
         self.assertIsNotNone(user_find)
         self.assertEqual(user_find.id, user.id)
         self.assertEqual(user_find.email, user.email)
