@@ -3,7 +3,6 @@ from flask import current_app
 from app import create_app, db
 from app.models import User, UserData
 from app.services import UserService
-from app.services import Security
 
 user_service = UserService()
 
@@ -46,7 +45,7 @@ class UserTestCase(unittest.TestCase):
 
         self.assertTrue(user.email, self.EMAIL_PRUEBA)
         self.assertTrue(user.username, self.USERNAME_PRUEBA)
-        self.assertTrue(Security.check_password(user.password, self.PASSWORD_PRUEBA))
+        self.assertTrue(user.password, self.PASSWORD_PRUEBA)
         self.assertIsNotNone(user.data)
         self.assertTrue(user.data.address, self.ADDRESS_PRUEBA)
         self.assertTrue(user.data.firstname, self.FIRSTNAME_PRUEBA)
@@ -62,7 +61,7 @@ class UserTestCase(unittest.TestCase):
         self.assertTrue(user.email, self.EMAIL_PRUEBA)
         self.assertTrue(user.username, self.USERNAME_PRUEBA)
         self.assertIsNotNone(user.password)
-        self.assertTrue(Security.check_password(user.password, self.PASSWORD_PRUEBA))
+        self.assertTrue(user_service.check_auth(user.username, self.PASSWORD_PRUEBA))
         self.assertIsNotNone(user.data)
         self.assertTrue(user.data.address, self.ADDRESS_PRUEBA)
         self.assertTrue(user.data.firstname, self.FIRSTNAME_PRUEBA)
@@ -110,7 +109,7 @@ class UserTestCase(unittest.TestCase):
         user = User(data)
         user.username = self.USERNAME_PRUEBA
         user.email = self.EMAIL_PRUEBA
-        user.password = Security.generate_password(self.PASSWORD_PRUEBA)
+        user.password = self.PASSWORD_PRUEBA
 
         return user
 
