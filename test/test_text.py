@@ -28,25 +28,26 @@ class TextTestCase(unittest.TestCase):
     
     def test_encrypt(self):
         
-        mytext = Text()
-        mytext.content = b"Hola mundo"
-        mytext.length = len(mytext.content)
-        mytext.language = "es"
+        mytext = self.__get_text()
         
         key = Fernet.generate_key()
         mytext.encrypt(key)
         self.assertNotEqual(mytext.content, b"Hola mundo")
 
     def test_decrypt(self):
-        mytext = Text()
-        mytext.content = b"Hola mundo"
-        mytext.length = len(mytext.content)
-        mytext.language = "es"
+        mytext = self.__get_text()
         
         key = Fernet.generate_key()
         mytext.encrypt(key)
         mytext.decrypt(key)
         self.assertEqual(mytext.content, b"Hola mundo")
+
+    def __get_text(self):
+        mytext = Text()
+        mytext.content = b"Hola mundo"
+        mytext.length = len(mytext.content)
+        mytext.language = "es"
+        return mytext
 
 
 if __name__ == '__main__':
