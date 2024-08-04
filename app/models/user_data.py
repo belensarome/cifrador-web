@@ -12,4 +12,5 @@ class UserData(db.Model):
     city: str   = db.Column(db.String(120), nullable=False)
     country: str = db.Column(db.String(120), nullable=False)
     user_id = db.Column('user_id', db.Integer, db.ForeignKey('users.id'))
+    #Relacion Uno a Uno bidireccional con User
     user = db.relationship("User", back_populates='data', uselist=False)
