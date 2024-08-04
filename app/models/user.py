@@ -21,6 +21,14 @@ class User(db.Model):
     def __init__(self, user_data: UserData = None):
         self.data = user_data
 
+    def add_role(self, role):
+        if role not in self.roles:
+            self.roles.append(role)
+
+    def remove_role(self, role):
+        if role in self.roles:
+            self.roles.remove(role)
+
 
     
 
