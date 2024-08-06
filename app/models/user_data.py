@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 from app import db
+from app.models.soft_delete import SoftDeleteMixin
 
 @dataclass(init=False, repr=True, eq=True)
-class UserData(db.Model):
+class UserData(SoftDeleteMixin, db.Model):
     __tablename__ = 'users_data'
     id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
     firstname: str = db.Column(db.String(80), nullable=False)
