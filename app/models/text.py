@@ -10,15 +10,7 @@ class Text(db.Model):
     content: str = db.Column(db.String(1200), nullable=False)
     length: int = db.Column(db.Integer, nullable=False)
     language: str = db.Column(db.String, nullable=False)
-
-    def encrypt(self, key):
-        f = Fernet(key)
-        token = f.encrypt(self.content)
-        self.content = token
     
-    def decrypt(self, key):
-        f = Fernet(key)
-        d = f.decrypt(self.content)
-        self.content = d
+    
 
 
