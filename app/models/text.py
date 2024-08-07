@@ -11,15 +11,6 @@ class Text(db.Model):
     length: int = db.Column(db.Integer, nullable=False)
     language: str = db.Column(db.String, nullable=False)
 
-    def save(self) -> 'Text':
-        db.session.add(self)
-        db.session.commit()
-        return self
-
-    def delete(self) -> None:
-        db.session.delete(self)
-        db.session.commit()
-
     def encrypt(self, key):
         f = Fernet(key)
         token = f.encrypt(self.content)

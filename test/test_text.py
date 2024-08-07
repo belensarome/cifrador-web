@@ -2,7 +2,10 @@ import unittest
 from flask import current_app
 from app import create_app, db
 from app.models import Text
+from app.services import TextService
 from cryptography.fernet import Fernet
+
+text_service = TextService()
 
 class TextTestCase(unittest.TestCase):
     def setUp(self):
@@ -21,7 +24,7 @@ class TextTestCase(unittest.TestCase):
         mytext.content = "Hola mundo"
         mytext.length = len(mytext.content)
         mytext.language = "es"
-        mytext.save()
+        text_service.save(mytext)
 
         self.assertIsNotNone(mytext)
         self.assertEqual(mytext.content, "Hola mundo")
