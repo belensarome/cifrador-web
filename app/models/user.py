@@ -20,6 +20,9 @@ class User(SoftDeleteMixin, AuditMixin, db.Model):
     #Flask Web Development Capitulo: Database Relationships Revisited Pag 49,149 
     roles = db.relationship("Role", secondary=users_roles, back_populates='users')
 
+    # Relación uno a muchos con text
+    texts = db.relationship('Text', uselist=False, back_populates='user')
+
     def __init__(self, user_data: UserData = None):
         self.data = user_data
 
