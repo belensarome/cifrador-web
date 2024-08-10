@@ -17,6 +17,7 @@ class TextTestCase(unittest.TestCase):
         db.create_all()
 
         self.TEXTO_PRUEBA = "Hola mundo"
+        self.LANGUAGE_PRUEBA = "es"
 
     def tearDown(self):
         db.session.remove()
@@ -27,11 +28,12 @@ class TextTestCase(unittest.TestCase):
         mytext = Text()
         mytext.content = self.TEXTO_PRUEBA
         mytext.length = len(mytext.content)
-        mytext.language = "es"
+        mytext.language = self.LANGUAGE_PRUEBA
         text_service.save(mytext)
 
         self.assertIsNotNone(mytext)
         self.assertEqual(mytext.content, self.TEXTO_PRUEBA)
+        self.assertEqual(mytext.language, self.LANGUAGE_PRUEBA)
     
     def test_encrypt(self):
         
@@ -54,7 +56,7 @@ class TextTestCase(unittest.TestCase):
         mytext = Text()
         mytext.content = self.TEXTO_PRUEBA
         mytext.length = len(mytext.content)
-        mytext.language = "es"
+        mytext.language = self.LANGUAGE_PRUEBA
         return mytext
 
 
