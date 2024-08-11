@@ -40,6 +40,14 @@ class SoftDeleteMixin {
 
 }
 
+class Text{
+    -content: str
+    - length: int
+    - language: str
+    - user_id: int
+
+}
+
 Model <|-- User
 SoftDeleteMixin <|-- User
 AudiMixin <|-- User
