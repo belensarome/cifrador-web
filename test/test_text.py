@@ -18,6 +18,7 @@ class TextTestCase(unittest.TestCase):
 
         self.TEXTO_PRUEBA = "Hola mundo"
         self.LANGUAGE_PRUEBA = "es"
+        self.KEY = "1234hola"
 
     def tearDown(self):
         db.session.remove()
@@ -39,15 +40,30 @@ class TextTestCase(unittest.TestCase):
         
         mytext = self.__get_text()
         
-        key = Fernet.generate_key()
+        key = encrypt_service.generate_fernet_key()
+        encrypt_service.encrypt(mytext, key)
+        self.assertNotEqual(mytext.content, self.TEXTO_PRUEBA)
+    
+    def test_encrypt_defined_key(self):
+        
+        mytext = self.__get_text()
+        
+        key = encrypt_service.generate_fernet_key(self.KEY)
         encrypt_service.encrypt(mytext, key)
         self.assertNotEqual(mytext.content, self.TEXTO_PRUEBA)
 
     def test_decrypt(self):
         mytext = self.__get_text()
         
-        key = Fernet.generate_key()
-        #key = "123"
+        key = encrypt_service.generate_fernet_key()
+        encrypt_service.encrypt(mytext, key)
+        encrypt_service.decrypt(mytext, key)
+        self.assertEqual(mytext.content, self.TEXTO_PRUEBA)
+
+    def test_decrypt_defined_key(self):
+        mytext = self.__get_text()
+        
+        key = encrypt_service.generate_fernet_key(self.KEY)
         encrypt_service.encrypt(mytext, key)
         encrypt_service.decrypt(mytext, key)
         self.assertEqual(mytext.content, self.TEXTO_PRUEBA)
