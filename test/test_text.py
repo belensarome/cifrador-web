@@ -4,7 +4,6 @@ from app import create_app, db
 from app.models import Text
 from app.services import TextService
 from app.services import EncryptService
-from cryptography.fernet import Fernet
 
 text_service = TextService()
 encrypt_service = EncryptService()

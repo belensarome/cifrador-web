@@ -23,8 +23,11 @@ class User(SoftDeleteMixin, AuditMixin, db.Model):
     # Relación uno a muchos con text
     texts = db.relationship('Text', uselist=False, back_populates='user')
 
-    def __init__(self, user_data: UserData = None):
-        self.data = user_data
+    def __init__(self, username: str = None, password: str = None, email: str = None, data: UserData = None):
+        self.data = data
+        self.username = username
+        self.password = password
+        self.email = email
 
     def add_role(self, role):
         if role not in self.roles:

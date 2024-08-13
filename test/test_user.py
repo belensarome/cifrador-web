@@ -43,14 +43,14 @@ class UserTestCase(unittest.TestCase):
         user = self.__get_user()
         # user.save()
 
-        self.assertTrue(user.email, self.EMAIL_PRUEBA)
-        self.assertTrue(user.username, self.USERNAME_PRUEBA)
-        self.assertTrue(user.password, self.PASSWORD_PRUEBA)
+        self.assertEqual(user.email, self.EMAIL_PRUEBA)
+        self.assertEqual(user.username, self.USERNAME_PRUEBA)
+        self.assertEqual(user.password, self.PASSWORD_PRUEBA)
         self.assertIsNotNone(user.data)
-        self.assertTrue(user.data.address, self.ADDRESS_PRUEBA)
-        self.assertTrue(user.data.firstname, self.FIRSTNAME_PRUEBA)
-        self.assertTrue(user.data.lastname, self.LASTNAME_PRUEBA)
-        self.assertTrue(user.data.phone, self.PHONE_PRUEBA)   
+        self.assertEqual(user.data.address, self.ADDRESS_PRUEBA)
+        self.assertEqual(user.data.firstname, self.FIRSTNAME_PRUEBA)
+        self.assertEqual(user.data.lastname, self.LASTNAME_PRUEBA)
+        self.assertEqual(user.data.phone, self.PHONE_PRUEBA)   
     
     def test_user_save(self):
         
@@ -58,15 +58,15 @@ class UserTestCase(unittest.TestCase):
 
         user_service.save(user)
         
-        self.assertTrue(user.email, self.EMAIL_PRUEBA)
-        self.assertTrue(user.username, self.USERNAME_PRUEBA)
+        self.assertEqual(user.email, self.EMAIL_PRUEBA)
+        self.assertEqual(user.username, self.USERNAME_PRUEBA)
         self.assertIsNotNone(user.password)
         self.assertTrue(user_service.check_auth(user.username, self.PASSWORD_PRUEBA))
         self.assertIsNotNone(user.data)
-        self.assertTrue(user.data.address, self.ADDRESS_PRUEBA)
-        self.assertTrue(user.data.firstname, self.FIRSTNAME_PRUEBA)
-        self.assertTrue(user.data.lastname, self.LASTNAME_PRUEBA)
-        self.assertTrue(user.data.phone, self.PHONE_PRUEBA)  
+        self.assertEqual(user.data.address, self.ADDRESS_PRUEBA)
+        self.assertEqual(user.data.firstname, self.FIRSTNAME_PRUEBA)
+        self.assertEqual(user.data.lastname, self.LASTNAME_PRUEBA)
+        self.assertEqual(user.data.phone, self.PHONE_PRUEBA)  
     
     def test_user_delete(self):
         
@@ -74,8 +74,7 @@ class UserTestCase(unittest.TestCase):
 
         user_service.save(user)
 
-        #borro el usuario
-        user_service.delete(user)
+        user_service.delete(user.id)
         self.assertIsNone(user_service.find(user))
     
     def test_user_all(self):
@@ -106,7 +105,8 @@ class UserTestCase(unittest.TestCase):
         data.city = self.CITY_PRUEBA
         data.country = self.COUNTRY_PRUEBA
 
-        user = User(data)
+        user = User()
+        user.data = data
         user.username = self.USERNAME_PRUEBA
         user.email = self.EMAIL_PRUEBA
         user.password = self.PASSWORD_PRUEBA

@@ -42,8 +42,8 @@ class RoleTestCase(unittest.TestCase):
         role_service.save(role)
         role.description = 'Administrator Updated'
         role_service.update(role, role.id)
-        self.assertTrue(role.name, self.ROL_NAME)
-        self.assertTrue(role.description, 'Administrator Updated')
+        self.assertEqual(role.name, self.ROL_NAME)
+        self.assertEqual(role.description, 'Administrator Updated')
 
     def test_role_delete(self):
         role = self.__get_role()
@@ -61,15 +61,15 @@ class RoleTestCase(unittest.TestCase):
         role = self.__get_role()
         role_service.save(role)
         role_find = role_service.find(role.id)
-        self.assertTrue(role_find.name, self.ROL_NAME)
-        self.assertTrue(role_find.description, self.ROL_DESCRIPCION)
+        self.assertEqual(role_find.name, self.ROL_NAME)
+        self.assertEqual(role_find.description, self.ROL_DESCRIPCION)
 
     def test_role_find_by_name(self):
         role = self.__get_role()
         role_service.save(role)
         role_find = role_service.find_by_name(self.ROL_NAME)
-        self.assertTrue(role_find.name, self.ROL_NAME)
-        self.assertTrue(role_find.description, self.ROL_DESCRIPCION)
+        self.assertEqual(role_find.name, self.ROL_NAME)
+        self.assertEqual(role_find.description, self.ROL_DESCRIPCION)
     
     def __get_role(self) -> Role:
         role = Role()
