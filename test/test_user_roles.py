@@ -12,7 +12,7 @@ user_service = UserService()
 class UsersRoleTestCase(unittest.TestCase):
 
         def setUp(self):
-            # os.environ['FLASK_CONTEXT'] = 'testing'
+            os.environ['FLASK_CONTEXT'] = 'testing'
             self.app = create_app()
             self.app_context = self.app.app_context()
             self.app_context.push()
@@ -79,7 +79,6 @@ class UsersRoleTestCase(unittest.TestCase):
             data.city = self.CITY_PRUEBA
             data.country = self.COUNTRY_PRUEBA
 
-            #user = User(data)
             user = User()
             user.data = data
             user.username = self.USERNAME_PRUEBA
