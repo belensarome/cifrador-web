@@ -9,3 +9,13 @@ class TextService:
     
     def delete(self, text:Text):
         repository.delete(text)
+    
+    def find(self, id: int):
+        return repository.find(id)
+
+    def all(self):
+        return repository.all()
+
+    def find_by(self, **kwargs):
+        return repository.find_by(kwargs)
+        return db.session.query(Text).filter_by(**kwargs).all()

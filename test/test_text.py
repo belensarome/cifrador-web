@@ -69,6 +69,30 @@ class TextTestCase(unittest.TestCase):
         encrypt_service.decrypt(mytext, key)
         self.assertEqual(mytext.content, self.TEXTO_PRUEBA)
 
+    def test_text_find(self):
+        text = self.__get_text()
+        text_service.save(text)
+        text_find = text_service.find(1)
+        self.assertIsNotNone(text_find)
+        self.assertEqual(text_find.id, text.id)
+        self.assertEqual(text.content, self.TEXTO_PRUEBA)
+        self.assertEqual(text.language, self.LANGUAGE_PRUEBA)
+
+    def test_all(self):
+        text1 = self.__get_text()
+        text2 = Text(content="Hello word", length=10, language="en")
+        text_service.save(text1)
+        text_service.save(text2)
+        texts = text_service.all()
+        self.assertEqual(len(texts), 2)
+        self.assertEqual(texts[0].content, text1.content)
+        self.assertEqual(texts[0].length, text1.length)
+        self.assertEqual(texts[0].language, text1.language)
+
+        self.assertEqual(texts[1].content, text2.content)
+        self.assertEqual(texts[1].length, text2.length)
+        self.assertEqual(texts[1].language, text2.language)
+
     def __get_text(self):
         mytext = Text()
         mytext.content = self.TEXTO_PRUEBA
